@@ -1,4 +1,6 @@
-package model;
+package model.builder;
+
+import model.abstractFactory.analyzer.abstracts.SymbolicAnalyzer;
 
 public interface Builder<T> {
     T withSummary();

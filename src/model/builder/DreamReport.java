@@ -1,4 +1,6 @@
-package model;
+package model.builder;
+
+import model.abstractFactory.analyzer.Analyzer;
 
 public class DreamReport {
     private Analyzer analyzer;
