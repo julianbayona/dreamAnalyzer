@@ -1,5 +1,15 @@
 package model;
 
+import model.abstractFactory.analyzer.conductuals.ConductualCognitive;
+import model.abstractFactory.analyzer.conductuals.ConductualEmotional;
+import model.abstractFactory.analyzer.conductuals.ConductualStatistical;
+import model.abstractFactory.analyzer.conductuals.ConductualSymbolic;
+import model.abstractFactory.analyzer.jungianos.JungianoCognitive;
+import model.abstractFactory.analyzer.jungianos.JungianoEmotional;
+import model.abstractFactory.analyzer.jungianos.JungianoStatistical;
+import model.abstractFactory.analyzer.jungianos.JungianoSymbolic;
+import model.builder.DreamReport;
+import model.builder.DreamReportBuilder;
 import model.factoryMethod.AbstractProductRepository;
 import model.factoryMethod.DreamRepositoryFactory;
 
@@ -18,6 +28,7 @@ public class Manager {
     private AbstractProductRepository historicalRepository;
     private AbstractProductRepository temporaryRepository;
     private DreamRepositoryFactory dreamRepositoryFactory;
+    private DreamReportBuilder dreamReportBuilder;
 
 
     public Manager() {
@@ -26,6 +37,7 @@ public class Manager {
         this.patients = new ArrayList<>();
         this.therapists = new ArrayList<>();
         dreamRepositoryFactory = new DreamRepositoryFactory();
+        this.dreamReportBuilder = new DreamReportBuilder();
         loadData();
     }
 
@@ -179,10 +191,55 @@ public class Manager {
         //logica para configurar el sistema, recuerden cambiar los tipos de los atributos
     }
 
-    public String createReport (String dreamAnaliced){
-        //logica para crear el reporte, recuerden cambiar los tipos de los atributos
-        return "aqui va el reporte del sueño analizado";
+    public void createReportWithSummary (int option){
+        if(option == 1) {
+            dreamReportBuilder.withSummary();
+        }
     }
+
+
+
+
+
+    public void createReportWithAnalyzeJuguiano (int option){
+
+        switch (option){
+            case 1:
+                dreamReportBuilder.withSymbolicSection(new JungianoSymbolic());
+                break;
+            case 2:
+                dreamReportBuilder.withStaticalSection(new JungianoStatistical());
+                break;
+            case 3:
+                dreamReportBuilder.withEmotionalSection(new JungianoEmotional());
+                break;
+            case 4:
+                dreamReportBuilder.withCognitiveSection(new JungianoCognitive());
+                break;
+            default:
+        }
+    }
+
+    public void createReportWithAnalyzeConductual (int option){
+
+        switch (option){
+            case 1:
+                dreamReportBuilder.withSymbolicSection(new ConductualSymbolic());
+                break;
+            case 2:
+                dreamReportBuilder.withStaticalSection(new ConductualStatistical());
+                break;
+            case 3:
+                dreamReportBuilder.withEmotionalSection(new ConductualEmotional());
+                break;
+            case 4:
+                dreamReportBuilder.withCognitiveSection(new ConductualCognitive());
+                break;
+            default:
+        }
+    }
+
+
 
     public List<Patient> getAllPatients() {
         return patients;

@@ -31,4 +31,12 @@ public class DreamReport {
         this.graphicalInsights = graphicalInsights;
     }
 
+    @Override
+    public String toString() {
+        return "DreamReport{" +
+                "analyzer=" + analyzer +
+                ", summary='" + summary + '\'' +
+                ", graphicalInsights='" + graphicalInsights + '\'' +
+                '}';
+    }
 }

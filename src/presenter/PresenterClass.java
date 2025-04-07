@@ -268,4 +268,25 @@ public class PresenterClass {
     }
 
 
+    public void optionSummary(){
+        while (true){
+            String choice = showMenuSumery();
+            System.out.println(choice);
+            switch (choice) {
+                case "1":
+                    patientFlow();
+                    break;
+                case "2":
+                    therapistFlow();
+                    break;
+                case "3":
+                    //System.out.println("Saliendo del sistema...");
+                    return;
+                default:
+                    //System.out.println("Opción no válida. Intente de nuevo.");
+            }
+        }
+    }
+
+
 }
