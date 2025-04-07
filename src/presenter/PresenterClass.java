@@ -103,10 +103,11 @@ public class PresenterClass {
         while (exit==false){
             String session = view.showMenuSession();
             if (session.equals("Therapist")){
-                sessionTherapist();
+                therapistFlow();
+                //sessionTherapist();
             }else if (session.equals("Patient")){
-                sessionPatient();
-
+                patientFlow();
+                //sessionPatient();
             }else if (session.equals("exit")){
                 exit=true;
                 view.exitMessage();
@@ -156,7 +157,6 @@ public class PresenterClass {
             String option = view.getInput("Seleccione la opcion a realizar");
             switch (option) {
                 case "1":
-                    // Registrar sueño (recuerden cambar segun la logica)
                     manager.regysterDream(option);
                     break;
                 case "2":
