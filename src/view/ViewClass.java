@@ -45,14 +45,6 @@ public class ViewClass {
         return scanner.nextInt();
     }
 
-    public void showMenuTherapist() {
-        System.out.println("1. Analizar Sueño");
-        System.out.println("2. Duplicar y experimentar con un sueño");
-        System.out.println("3. Generar informe de un sueño");
-        System.out.println("4. Configurar sistema");
-        System.out.println("5. Exit");
-    }
-
     public void exitMessage(){
         System.out.println("Sesion cerrada, gracias por usar el sistema de analisis de sueños");
     }
