@@ -8,8 +8,7 @@ public class JungianoEmotional extends EmotionalAnalyzer {
     }
 
     @Override
-    public void analyzeDream() {
-        System.out.println("Analizando el sueño desde una perspectiva jungiana-emocional");
-        System.out.println("Explorando arquetipos emocionales en el inconsciente colectivo");
+    public String analyzeDream() {
+        return ("Analizando el sueño desde una perspectiva jungiana-emocional");
     }
 }

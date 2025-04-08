@@ -8,8 +8,7 @@ public class ConductualStatistical extends StatisticalAnalyzer {
     }
 
     @Override
-    public void analyzeDream() {
-        System.out.println("Analizando el sueño desde una perspectiva conductual-estadística");
-        System.out.println("Analizando frecuencias y patrones de comportamiento");
+    public String analyzeDream() {
+        return ("Analizando el sueño desde una perspectiva conductual-estadística");
     }
 }

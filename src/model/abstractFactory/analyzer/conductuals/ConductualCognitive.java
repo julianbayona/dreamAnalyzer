@@ -8,8 +8,7 @@ public class ConductualCognitive extends CognitiveAnalyzer {
     }
 
     @Override
-    public void analyzeDream() {
-        System.out.println("Analizando el sueño desde una perspectiva conductual-cognitiva");
-        System.out.println("Examinando esquemas mentales y patrones de pensamiento");
+    public String analyzeDream() {
+        return ("Analizando el sueño desde una perspectiva conductual-cognitiva");
     }
 }

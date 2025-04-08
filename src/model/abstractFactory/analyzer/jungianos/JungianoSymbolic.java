@@ -8,8 +8,7 @@ public class JungianoSymbolic extends SymbolicAnalyzer {
     }
 
     @Override
-    public void analyzeDream() {
-        System.out.println("Analizando el sueño desde una perspectiva jungiana-simbólica");
-        System.out.println("Interpretando símbolos arquetípicos y su significado colectivo");
+    public String analyzeDream() {
+        return ("Analizando el sueño desde una perspectiva jungiana-simbólica");
     }
 }

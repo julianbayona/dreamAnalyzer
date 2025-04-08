@@ -8,8 +8,7 @@ public class JungianoStatistical extends StatisticalAnalyzer {
     }
 
     @Override
-    public void analyzeDream() {
-        System.out.println("Analizando el sueño desde una perspectiva jungiana-estadística");
-        System.out.println("Evaluando patrones de arquetipos recurrentes");
+    public String analyzeDream() {
+        return ("Analizando el sueño desde una perspectiva jungiana-estadística");
     }
 }

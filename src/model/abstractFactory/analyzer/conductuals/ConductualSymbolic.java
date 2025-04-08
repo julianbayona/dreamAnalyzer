@@ -8,8 +8,7 @@ public class ConductualSymbolic extends SymbolicAnalyzer {
     }
 
     @Override
-    public void analyzeDream() {
-        System.out.println("Analizando el sueño desde una perspectiva conductual-simbólica");
-        System.out.println("Evaluando símbolos como estímulos condicionados");
+    public String analyzeDream() {
+        return ("Analizando el sueño desde una perspectiva conductual-simbólica");
     }
 }

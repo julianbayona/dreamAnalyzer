@@ -1,5 +1,6 @@
 package model.abstractFactory;
 
+import model.Constants;
 import model.abstractFactory.factories.ConductualFactory;
 import model.abstractFactory.factories.JungianoFactory;
 import model.abstractFactory.factories.TherapeuticApproachFactory;

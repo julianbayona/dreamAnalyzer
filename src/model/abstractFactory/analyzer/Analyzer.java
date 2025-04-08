@@ -1,6 +1,6 @@
 package model.abstractFactory.analyzer;
 
 public interface Analyzer {
-    void analyzeDream();
+    String analyzeDream();
     String getApproach();
 }
