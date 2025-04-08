@@ -1,6 +1,5 @@
 package model.builder;
 
-import model.abstractFactory.analyzer.Analyzer;
 import model.abstractFactory.analyzer.abstracts.CognitiveAnalyzer;
 import model.abstractFactory.analyzer.abstracts.EmotionalAnalyzer;
 import model.abstractFactory.analyzer.abstracts.StatisticalAnalyzer;
@@ -54,5 +53,16 @@ public class DreamReportBuilder implements Builder<DreamReport> {
     public DreamReport build() {
         return dreamReport;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("DreamReportBuilder{");
+        sb.append("dreamReport=").append(dreamReport);
+        sb.append('}');
+        return sb.toString();
+    }
+
+
 
 }

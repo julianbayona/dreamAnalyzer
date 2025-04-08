@@ -2,6 +2,10 @@ package model;
 
 import java.util.*;
 import model.abstractFactory.FactoryProvider;
+import model.abstractFactory.analyzer.abstracts.CognitiveAnalyzer;
+import model.abstractFactory.analyzer.abstracts.EmotionalAnalyzer;
+import model.abstractFactory.analyzer.abstracts.StatisticalAnalyzer;
+import model.abstractFactory.analyzer.abstracts.SymbolicAnalyzer;
 import model.abstractFactory.analyzer.conductuals.ConductualCognitive;
 import model.abstractFactory.analyzer.conductuals.ConductualEmotional;
 import model.abstractFactory.analyzer.conductuals.ConductualStatistical;
@@ -11,6 +15,7 @@ import model.abstractFactory.analyzer.jungianos.JungianoEmotional;
 import model.abstractFactory.analyzer.jungianos.JungianoStatistical;
 import model.abstractFactory.analyzer.jungianos.JungianoSymbolic;
 import model.abstractFactory.factories.TherapeuticApproachFactory;
+import model.builder.DreamReport;
 import model.builder.DreamReportBuilder;
 import model.factoryMethod.AbstractProductRepository;
 import model.factoryMethod.DreamRepositoryFactory;
@@ -19,16 +24,15 @@ public class Manager {
 
     String systemSetting; // debe ser de tipo de systemSetting pero lo dejo asi mientras para no error
     private Map<Integer, List<Dream>> patientDreams; // el segundo atributo debe ser Dream pero lo dejo mientras asi
-                                                     // para no error
+    // para no error
     private List<Patient> patients;
     private List<Therapist> therapists;
     private AbstractProductRepository historicalRepository;
     private AbstractProductRepository temporaryRepository;
     private DreamRepositoryFactory dreamRepositoryFactory;
     private TherapeuticApproachFactory approachFactory;
-    private FactoryProvider factoryProvider;    
+    private FactoryProvider factoryProvider;
     private DreamReportBuilder dreamReportBuilder;
-
 
     public Manager() {
         this.factoryProvider = new FactoryProvider();
@@ -200,19 +204,41 @@ public class Manager {
         // atributos
     }
 
-    public void createReportWithSummary (int option){
-        if(option == 1) {
-            dreamReportBuilder.withSummary();
-        }
+    public void createReportWithAnalizisCognitive() {
+        dreamReportBuilder.withCognitiveSection((CognitiveAnalyzer)approachFactory.getCognitiveAnalyzer());
+    }
+
+    public void createReportWithAnalizisEmotional() {
+        dreamReportBuilder.withEmotionalSection((EmotionalAnalyzer)approachFactory.getEmotionalAnalyzer());
+    }
+
+    public void createReportWithAnalizisStatical() {
+        dreamReportBuilder.withStaticalSection((StatisticalAnalyzer)approachFactory.getStatisticalAnalyzer());
+    }
+
+    public void createReportWithAnalizisSymbolic() {
+        dreamReportBuilder.withSymbolicSection((SymbolicAnalyzer)approachFactory.getSymbolicAnalyzer());
     }
 
 
+    public void createReportWithSummary() {
+        dreamReportBuilder.withSummary();
+    }
 
 
+    public void createReportWithgraph() {
+        dreamReportBuilder.withGraphicalInsights();
+    }
 
-    public void createReportWithAnalyzeJuguiano (int option){
 
-        switch (option){
+    public DreamReport getReport(){
+        return dreamReportBuilder.build();
+    }
+
+
+    public void createReportWithAnalyzeJuguiano(int option) {
+
+        switch (option) {
             case 1:
                 dreamReportBuilder.withSymbolicSection(new JungianoSymbolic());
                 break;
@@ -229,9 +255,9 @@ public class Manager {
         }
     }
 
-    public void createReportWithAnalyzeConductual (int option){
+    public void createReportWithAnalyzeConductual(int option) {
 
-        switch (option){
+        switch (option) {
             case 1:
                 dreamReportBuilder.withSymbolicSection(new ConductualSymbolic());
                 break;
@@ -248,8 +274,6 @@ public class Manager {
         }
     }
 
-
-
     public List<Patient> getAllPatients() {
         return patients;
     }
@@ -258,7 +282,7 @@ public class Manager {
         this.approachFactory = factoryProvider.getFactory(approach);
     }
 
-    public boolean existApproach(){
+    public boolean existApproach() {
         return approachFactory != null;
     }
 }
