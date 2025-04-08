@@ -1,9 +1,9 @@
 package model.factoryMethod;
 
-import model.Dream;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import model.prototype.Dream;
 
 public abstract class AbstractProductRepository {
     protected List<Dream> dreams = new ArrayList<>();

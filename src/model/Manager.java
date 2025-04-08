@@ -19,6 +19,7 @@ import model.builder.DreamReport;
 import model.builder.DreamReportBuilder;
 import model.factoryMethod.AbstractProductRepository;
 import model.factoryMethod.DreamRepositoryFactory;
+import model.prototype.Dream;
 import model.singleton.SystemSetting;
 
 public class Manager {
@@ -35,6 +36,7 @@ public class Manager {
     private DreamReportBuilder dreamReportBuilder;
 
     public Manager() {
+        factoryProvider = new FactoryProvider();
         this.systemSetting = SystemSetting.getInstance();
         this.patientDreams = new HashMap<>();
         this.patients = new ArrayList<>();
@@ -193,6 +195,24 @@ public class Manager {
                     return approachFactory.getStatisticalAnalyzer().analyzeDream();
                 case Constants.SYMBOLIC:
                     return approachFactory.getSymbolicAnalyzer().analyzeDream();
+            }
+        }
+        return null;
+    }
+
+    public Dream analyzeDuplicatedDream(String analyzer, Dream dream) {
+        if (approachFactory == null) {
+            return null;
+        } else {
+            switch (analyzer) {
+                case Constants.COGNITIVE:
+                    return approachFactory.getCognitiveAnalyzer().analyzeDuplicatedDream(dream);
+                case Constants.EMOTIONAL:
+                    return approachFactory.getEmotionalAnalyzer().analyzeDuplicatedDream(dream);
+                case Constants.STATISTICAL:
+                    return approachFactory.getStatisticalAnalyzer().analyzeDuplicatedDream(dream);
+                case Constants.SYMBOLIC:
+                    return approachFactory.getSymbolicAnalyzer().analyzeDuplicatedDream(dream);
             }
         }
         return null;

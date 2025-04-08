@@ -1,6 +1,7 @@
 package model.abstractFactory.analyzer.jungianos;
 
 import model.abstractFactory.analyzer.abstracts.SymbolicAnalyzer;
+import model.prototype.Dream;
 
 public class JungianoSymbolic extends SymbolicAnalyzer {
     public JungianoSymbolic() {
@@ -9,6 +10,13 @@ public class JungianoSymbolic extends SymbolicAnalyzer {
 
     @Override
     public String analyzeDream() {
-        return ("Analizando el sueño desde una perspectiva jungiana-simbólica");
+        return ("Sueño analizado desde una perspectiva jungiana-simbólica");
+    }
+
+    @Override
+    public Dream analyzeDuplicatedDream(Dream dream) {
+        Dream duplicatedDream = dream.clone();
+        duplicatedDream.setNarrative("Sueño analizado desde una perspectiva jungiana-simbólica");
+        return duplicatedDream;
     }
 }

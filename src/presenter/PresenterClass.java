@@ -3,9 +3,10 @@ package presenter;
 import java.util.ArrayList;
 import java.util.List;
 import model.Constants;
-import model.Dream;
 import model.Manager;
 import model.Patient;
+import model.builder.DreamReport;
+import model.prototype.Dream;
 import view.ViewClass;
 
 public class PresenterClass {
@@ -26,11 +27,10 @@ public class PresenterClass {
 
     public void showCreateReport() {
         int id = view.getUserId();
-        System.out.println(manager.getDreamsById(id));
+        view.showDreams(getDreamsForView(id));
         int idDream = view.getDreamId();
         Dream dream = manager.getDreamById(id, idDream);
-        System.out.println(dream);
-        showDream(dream);
+        showDream(dream, "Sueño a analizar:");
         changeApproach();
         withSummary();
     }
@@ -127,8 +127,9 @@ public class PresenterClass {
     }
 
     private void therapistOptions() {
-        while (true) {
-            String choice = view.showTherapistOptions();
+        String choice = "";
+        while (!choice.equals("7")) {
+            choice = view.showTherapistOptions();
             switch (choice) {
                 case "1":
                     view.showPatients(getPatientsForView());
@@ -150,6 +151,9 @@ public class PresenterClass {
                 case "3":
                     showCreateReport();
                     break;
+                case "4":
+                    analyseDuplicatedDream();
+                    break;
                 case "5":
                     analyseDream();
                     break;
@@ -170,6 +174,13 @@ public class PresenterClass {
         Dream dream = dreamToAnalyse();
         changeApproach();
         realizeAnalysis(option, dream);
+    }
+   
+    public void analyseDuplicatedDream() {
+        String option = "";
+        Dream dream = dreamToAnalyse();
+        changeApproach();
+        realizeDuplication(option, dream);
     }
 
     public Dream dreamToAnalyse() {
@@ -232,7 +243,7 @@ public class PresenterClass {
                     break;
 
                 case "7":
-                    System.out.println(manager.getReport().toString());
+                    showReport(manager.getReport());
                     inLoop = false;
                     break;
                 default:
@@ -240,6 +251,13 @@ public class PresenterClass {
             }
         }
 
+    }
+
+    public void showReport(DreamReport report) {
+        view.showMessage("--------- Reporte obtenido ---------");
+        view.showMessage("--------- Resumen ---------\n" + report.getSummary());
+        view.showMessage("-------- Contenido --------\n" + report.getContent());
+        view.showMessage("----- Gráficos -----\n" + report.getGraphicalInsights() + "\n");
     }
 
     public void realizeAnalysis(String option, Dream dream) {
@@ -252,20 +270,20 @@ public class PresenterClass {
                     + "5. Atrás\n");
             switch (option) {
                 case "1":
-                    showDream(dream);
-                    view.showMessage(manager.analyzeDream(Constants.COGNITIVE, dream));
+                    showDream(dream, "Sueño analizado:");
+                    view.showMessage(manager.analyzeDream(Constants.COGNITIVE, dream) + "\n");
                     break;
                 case "2":
-                    showDream(dream);
-                    view.showMessage(manager.analyzeDream(Constants.EMOTIONAL, dream));
+                    showDream(dream, "Sueño analizado:");
+                    view.showMessage(manager.analyzeDream(Constants.EMOTIONAL, dream) + "\n");
                     break;
                 case "3":
-                    showDream(dream);
-                    view.showMessage(manager.analyzeDream(Constants.STATISTICAL, dream));
+                    showDream(dream, "Sueño analizado:");
+                    view.showMessage(manager.analyzeDream(Constants.STATISTICAL, dream) + "\n");
                     break;
                 case "4":
-                    showDream(dream);
-                    view.showMessage(manager.analyzeDream(Constants.SYMBOLIC, dream));
+                    showDream(dream, "Sueño analizado:");
+                    view.showMessage(manager.analyzeDream(Constants.SYMBOLIC, dream) + "\n");
                     break;
                 default:
                     break;
@@ -273,9 +291,40 @@ public class PresenterClass {
         }
     }
 
-    public void showDream(Dream dream) {
+    public void realizeDuplication(String option, Dream dream) {
+        while (!option.equals("5")) {
+            option = view.getInput("Ingrese el tipo de análisis que desea realizar:\n"
+                    + "1. Cognitivo\n"
+                    + "2. Emocional\n"
+                    + "3. Estadísitco\n"
+                    + "4. Simbólico\n"
+                    + "5. Atrás\n");
+            switch (option) {
+                case "1":
+                    showDream(dream, "Sueño Original:");
+                    showDream(manager.analyzeDuplicatedDream(Constants.COGNITIVE, dream), "Sueño Modificado:");
+                    break;
+                case "2":
+                    showDream(dream, "Sueño Original:");
+                    showDream(manager.analyzeDuplicatedDream(Constants.EMOTIONAL, dream), "Sueño Modificado:");
+                    break;
+                case "3":
+                    showDream(dream, "Sueño Original:");
+                    showDream(manager.analyzeDuplicatedDream(Constants.STATISTICAL, dream), "Sueño Modificado:");
+                    break;
+                case "4":
+                    showDream(dream, "Sueño Original:");
+                    showDream(manager.analyzeDuplicatedDream(Constants.SYMBOLIC, dream), "Sueño Modificado:");
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    public void showDream(Dream dream, String message) {
         view.showMessage("--------------------------");
-        view.showMessage("Sueño analizado:");
+        view.showMessage(message);
         view.showMessage("Duración: " + dream.getDuration() + " min");
         view.showMessage("   Intensidad Emocional: " + dream.getEmotionalIntensity());
         view.showMessage("   Narrativa: " + dream.getNarrative());
@@ -314,8 +363,8 @@ public class PresenterClass {
 
         if (dreams != null) {
             for (Dream dream : dreams) {
-                dreamList.add(new Object[]{dream.getDuration(), dream.getEmotionalIntensity(), dream.getNarrative(),
-                    dream.getVisualLight()});
+                dreamList.add(new Object[] { dream.getDuration(), dream.getEmotionalIntensity(), dream.getNarrative(),
+                        dream.getVisualLight() });
             }
         }
         return dreamList;
@@ -327,13 +376,13 @@ public class PresenterClass {
 
         if (patients != null) {
             for (Patient patient : patients) {
-                patientList.add(new Object[]{patient.getName(), patient.getId(), patient.getAge()});
+                patientList.add(new Object[] { patient.getName(), patient.getId(), patient.getAge() });
             }
         }
         return patientList;
     }
 
-    public void selectConfigMenu(){
+    public void selectConfigMenu() {
         String option = view.showSystemConfigOptions();
         switch (option) {
             case "1":
@@ -352,13 +401,13 @@ public class PresenterClass {
         }
     }
 
-    public void getConfigKeyMenu(){
+    public void getConfigKeyMenu() {
         String key = view.showConfigKeyMenu("Ver", "visualizar");
         String configValue = view.convertConfigValue(key);
         if (configValue == null) {
             view.showErrorConfig();
-        } else if(configValue.equals("13")){
-            return;  
+        } else if (configValue.equals("13")) {
+            return;
         } else {
             String value = manager.getSystemConfig(configValue);
             view.showMessage("--- Configuración del sistema ---\n" + configValue + ": " + value);
@@ -366,13 +415,13 @@ public class PresenterClass {
         }
     }
 
-    public void setConfigKeyMenu(){
+    public void setConfigKeyMenu() {
         String key = view.showConfigKeyMenu("Actualizar", "actualizar");
         String configValue = view.convertConfigValue(key);
         if (configValue == null) {
             view.showErrorConfig();
-        } else if(configValue.equals("13")){
-            return;  
+        } else if (configValue.equals("13")) {
+            return;
         } else {
             String newValue = view.showAndGetValue(configValue, manager.getSystemConfig(configValue));
             manager.setSystemConfig(configValue, newValue);
@@ -380,10 +429,10 @@ public class PresenterClass {
         }
     }
 
-    public void getConfigsKeyMenu(){
+    public void getConfigsKeyMenu() {
         String[] keyValues = manager.getAllConfigKeys();
         view.showMessage("--- Configuraciones del sistema ---");
-        for(String keyValue : keyValues) {
+        for (String keyValue : keyValues) {
             if (keyValue == null) {
                 view.showErrorConfig();
             } else {

@@ -46,4 +46,8 @@ public class DreamReport {
                 + ", graphicalInsights='" + graphicalInsights + '\''
                 + '}';
     }
+
+    public String getContent() {
+        return content;
+    }
 }

@@ -1,6 +1,7 @@
 package model.abstractFactory.analyzer.conductuals;
 
 import model.abstractFactory.analyzer.abstracts.SymbolicAnalyzer;
+import model.prototype.Dream;
 
 public class ConductualSymbolic extends SymbolicAnalyzer {
     public ConductualSymbolic() {
@@ -9,6 +10,13 @@ public class ConductualSymbolic extends SymbolicAnalyzer {
 
     @Override
     public String analyzeDream() {
-        return ("Analizando el sueño desde una perspectiva conductual-simbólica");
+        return ("Sueño analizado desde una perspectiva conductual-simbólica");
+    }
+
+    @Override
+    public Dream analyzeDuplicatedDream(Dream dream) {
+        Dream duplicatedDream = dream.clone();
+        duplicatedDream.setNarrative("Sueño analizado desde una perspectiva conductual-simbólica");
+        return duplicatedDream;
     }
 }

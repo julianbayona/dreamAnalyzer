@@ -2,9 +2,9 @@ package model.factoryMethod;
 
 
 
-import model.Dream;
-
 import java.util.ArrayList;
+
+import model.prototype.Dream;
 
 public class TemporaryDreamRepository extends AbstractProductRepository{
 

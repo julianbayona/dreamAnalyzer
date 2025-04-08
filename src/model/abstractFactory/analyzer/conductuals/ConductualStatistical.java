@@ -1,6 +1,7 @@
 package model.abstractFactory.analyzer.conductuals;
 
 import model.abstractFactory.analyzer.abstracts.StatisticalAnalyzer;
+import model.prototype.Dream;
 
 public class ConductualStatistical extends StatisticalAnalyzer {
     public ConductualStatistical() {
@@ -9,6 +10,13 @@ public class ConductualStatistical extends StatisticalAnalyzer {
 
     @Override
     public String analyzeDream() {
-        return ("Analizando el sueño desde una perspectiva conductual-estadística");
+        return ("Sueño analizado desde una perspectiva conductual-estadística");
+    }
+    
+    @Override
+    public Dream analyzeDuplicatedDream(Dream dream) {
+        Dream duplicatedDream = dream.clone();
+        duplicatedDream.setNarrative("Sueño analizado desde una perspectiva conductual-estadística");
+        return duplicatedDream;
     }
 }

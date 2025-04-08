@@ -167,9 +167,9 @@ public class ViewClass {
     public String showTherapistOptions() {
         System.out.println("1. Ver lista de pacientes");
         System.out.println("2. Almacenar sueño en repositorio");
-        System.out.println("3. Generar informe de análisis--(no implementado)");
-        System.out.println("4. Duplicar sueño para modificar narrativa--(no implementado)");
-        System.out.println("5. Analizar sueño--(no implementado)");
+        System.out.println("3. Generar informe de análisis");
+        System.out.println("4. Duplicar sueño para modificar narrativa");
+        System.out.println("5. Analizar sueño");
         System.out.println("6. Configurar sistema");
         System.out.println("7. Salir");
         return scanner.nextLine();
