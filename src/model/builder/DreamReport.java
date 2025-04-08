@@ -41,8 +41,8 @@ public class DreamReport {
     @Override
     public String toString() {
         return "DreamReport{"
+                + "summary='" + summary + '\''
                 + ", content='" + content + '\''
-                + ", summary='" + summary + '\''
                 + ", graphicalInsights='" + graphicalInsights + '\''
                 + '}';
     }

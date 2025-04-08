@@ -35,6 +35,7 @@ public class Manager {
     private DreamReportBuilder dreamReportBuilder;
 
     public Manager() {
+        this.factoryProvider = new FactoryProvider();
         this.systemSetting = SystemSetting.getInstance();
         this.patientDreams = new HashMap<>();
         this.patients = new ArrayList<>();
