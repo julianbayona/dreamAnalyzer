@@ -45,14 +45,6 @@ public class ViewClass {
         return scanner.nextInt();
     }
 
-    public void showMenu() {
-        System.out.println("1. Create Repository");
-        System.out.println("2. Register Dream");
-        System.out.println("3. Analyze Dream");
-        System.out.println("4. Configure System");
-        System.out.println("5. Create Report");
-        System.out.println("6. Exit");
-    }
     public void showMenuTherapist() {
         System.out.println("1. Analizar Sueño");
         System.out.println("2. Duplicar y experimentar con un sueño");
@@ -61,83 +53,70 @@ public class ViewClass {
         System.out.println("5. Exit");
     }
 
-    public void showMenuPatient() {
-        System.out.println("1. Registrar sueño");
-        System.out.println("2. Exit");
-    }
-
     public void exitMessage(){
         System.out.println("Sesion cerrada, gracias por usar el sistema de analisis de sueños");
     }
 
-    public String showLogin(){
+    public String showLogin(String userType) {
+        System.out.println("\n--- INICIO " + userType + " ---");
         System.out.println("1. Iniciar sesion");
         System.out.println("2. Registrarme");
-        return scanner.next();
+        System.out.println("3. Salir");
+        System.out.print("Seleccione una opción: ");
+        return scanner.nextLine().trim();
     }
 
     public String getUserName(){
-        System.out.println("\n Inigrese nombre del usuario");
-        scanner.nextLine();
+        System.out.print("\nIngrese nombre del usuario: "); 
         return scanner.nextLine();
     }
 
     public int getUserId(){
-        System.out.println("\n Inigrese id del usuario");
-        scanner.nextLine();
+        System.out.println("\nIngrese id del usuario: ");
         return scanner.nextInt();
     }
 
     public int getDreamId(){
-        System.out.println("\n Inigrese id del sueño");
-        scanner.nextLine();
+        System.out.println("\nIngrese id del sueño: ");
         return scanner.nextInt();
     }
 
     public Object[] registerPatient() {
         System.out.println("\n--- Registro de Paciente ---");
-
-        scanner.nextLine();
-
+        
         System.out.print("Ingrese el nombre del paciente: ");
         String name = scanner.nextLine();
 
         System.out.print("Ingrese la edad del paciente: ");
         int age = scanner.nextInt();
-        scanner.nextLine();
+        scanner.nextLine(); 
 
-        System.out.println("Paciente registrado exitosamente.\n");
-
+        System.out.println("\nPaciente registrado exitosamente.");
         return new Object[]{name, age};
     }
 
     public Object[] registerTherapist() {
         System.out.println("\n--- Registro de Terapeuta ---");
-
-        scanner.nextLine();
-
+        
         System.out.print("Ingrese el nombre del terapeuta: ");
         String name = scanner.nextLine();
 
         System.out.print("Ingrese la edad del terapeuta: ");
         int age = scanner.nextInt();
-        scanner.nextLine();
+        scanner.nextLine(); 
 
-        System.out.println("Paciente registrado exitosamente.\n");
-
+        System.out.println("\nTerapeuta registrado exitosamente.");
         return new Object[]{name, age};
     }
 
     public Object[] registerDream() {
         System.out.println("\n--- Registro de Sueño ---");
-
+        
         System.out.print("Ingrese la duración del sueño (minutos): ");
         int duration = scanner.nextInt();
-        scanner.nextLine();
 
         System.out.print("Ingrese la intensidad emocional (1-10): ");
         int emotionalIntensity = scanner.nextInt();
-        scanner.nextLine();
 
         System.out.print("Ingrese el nivel de luz visual en el sueño (1-10): ");
         int visualLight = scanner.nextInt();
@@ -145,10 +124,7 @@ public class ViewClass {
 
         System.out.print("Describa el sueño: ");
         String narrative = scanner.nextLine();
-
-        System.out.println("Sueño registrado exitosamente.\n");
-
-        return new Object[]{duration, emotionalIntensity, visualLight, narrative}; // Retorna un arreglo con los datos
+        return new Object[]{duration, emotionalIntensity, visualLight, narrative};
     }
 
     public void showDreams(List<Object[]> dreams) {
@@ -169,12 +145,13 @@ public class ViewClass {
         }
     }
 
-
     public String showPatientOptions() {
+        System.out.println("\n--- Opciones de Paciente ---");
         System.out.println("1. Registrar mis sueños");
         System.out.println("2. Ver mis sueños");
         System.out.println("3. Volver al menu principal");
-        return scanner.next();
+        System.out.print("Seleccione una opción: ");
+        return scanner.nextLine();
     }
 
     public void showPatients(List<Object[]> patients) {
@@ -195,13 +172,15 @@ public class ViewClass {
     }
 
     public String showTherapistOptions() {
-        System.out.println("1.Ver lista de pacientes");
-        System.out.println("2.Almacenar sueño en repositorio");
+        System.out.println("\n--- Opciones de Terapeuta ---");
+        System.out.println("1. Ver lista de pacientes");
+        System.out.println("2. Almacenar sueño en repositorio");
         System.out.println("3. Generar informe de análisis--(no implementado)");
         System.out.println("4. Duplicar sueño para otro análisis--(no implementado)");
         System.out.println("5. Analizar sueño--(no implementado)");
-        System.out.println("6.Salir");
-        return scanner.next();
+        System.out.println("6. Salir");
+        System.out.print("Seleccione una opción: ");
+        return scanner.nextLine();
     }
 
     public String showRepositories(){

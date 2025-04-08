@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.*;
 
-
 public class Manager {
 
     String systemSetting; //debe ser de tipo de systemSetting pero lo dejo asi mientras para no error
