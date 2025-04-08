@@ -139,18 +139,15 @@ public class PresenterClass {
                     break;
                 case "3":
                     return;
-<<<<<<< HEAD
                 case "5":
                     analyseDream();
                     break;
-=======
 
                 case "6":
                     selectConfigMenu();
                     break;
                 case "7":
                     return;
->>>>>>> feature/systemConfigMenu
                 default:
                     view.showMessage("Opcion no valida.");
             }
@@ -278,10 +275,6 @@ public class PresenterClass {
         return patientList;
     }
 
-<<<<<<< HEAD
-    public static void main(String[] args) {
-        new PresenterClass();
-=======
     public void selectConfigMenu(){
         String option = view.showSystemConfigOptions();
         switch (option) {
@@ -340,7 +333,6 @@ public class PresenterClass {
             }
         }
         view.getInput("(Presione cualquier tecla para continuar...)");
->>>>>>> feature/systemConfigMenu
     }
 
 }
