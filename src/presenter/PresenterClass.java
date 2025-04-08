@@ -1,13 +1,12 @@
 package presenter;
 
+import java.util.ArrayList;
+import java.util.List;
 import model.Dream;
 import model.Manager;
 import model.Patient;
 import model.Therapist;
 import view.ViewClass;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PresenterClass {
     private ViewClass view;
@@ -17,29 +16,7 @@ public class PresenterClass {
         manager = new Manager();
         view = new ViewClass();
         manager = new Manager();
-        this.starSession();
-        //init();
-        //this.inicioSecion();
-    }
-
-    public void init(){
-        while (true){
-            String choice = showMenuSession();
-            System.out.println(choice);
-            switch (choice) {
-                case "1":
-                    patientFlow();
-                    break;
-                case "2":
-                    therapistFlow();
-                    break;
-                case "3":
-                    //System.out.println("Saliendo del sistema...");
-                    return;
-                default:
-                    //System.out.println("Opción no válida. Intente de nuevo.");
-            }
-        }
+        this.init();
     }
 
     public String showMenuSession(){
@@ -48,7 +25,7 @@ public class PresenterClass {
 
     private void patientFlow() {
         while (true) {
-            String choice = view.showLogin();
+            String choice = view.showLogin("PACIENTE");
             switch (choice) {
                 case "1":
                     String name = view.getUserName();
@@ -67,14 +44,14 @@ public class PresenterClass {
                 case "3":
                     return;
                 default:
-                    view.showMessage("Opcion no valida.");
+                    view.showMessage("\n Opcion no valida.");
             }
         }
     }
 
     private void therapistFlow() {
         while (true) {
-            String choice = view.showLogin();
+        String choice = view.showLogin("TERAPEUTA");
             switch (choice) {
                 case "1":
                     String name = view.getUserName();
@@ -97,7 +74,7 @@ public class PresenterClass {
         }
     }
 
-    public void starSession(){
+    public void init(){
         Boolean exit=false;
 
         while (exit==false){
@@ -117,58 +94,6 @@ public class PresenterClass {
         }
     }
 
-    public void sessionTherapist(){
-        Boolean exit=false;
-        while (exit==false){
-            view.showMenuTherapist();
-            String option = view.getInput("Seleccione la opcion a realizar");
-            switch (option) {
-                case "1":
-                    // Analizar sueño (recuerden cambar segun la logica)
-                    manager.analizeDream(option, option);
-                    break;
-                case "2":
-                    // Duplicar y experimentar con un sueño
-                    //Agregar la logica de duplicar y experimentar con un sueño del manager
-                    break;
-                case "3":
-                    // Generar informe de un sueño (recuerden cambar segun la logica)
-                    manager.createReport(option);
-                    break;
-                case "4":
-                    // Configure System (recuerden cambar segun la logica)
-                    manager.systemConfig();
-                    break;
-                case "5":
-                    // exit
-                    view.exitMessage();
-                    exit=true;
-                    break;
-                default:
-                    System.out.println("Opción no válida, intente de nuevo.");
-            }
-        }
-    }
-
-    public void sessionPatient(){
-        Boolean exit=false;
-        while (exit==false){
-            view.showMenuPatient();
-            String option = view.getInput("Seleccione la opcion a realizar");
-            switch (option) {
-                case "1":
-                    manager.regysterDream(option);
-                    break;
-                case "2":
-                    // exit
-                    view.exitMessage();
-                    exit=true;
-                    break;
-                default:
-                    System.out.println("Opción no válida, intente de nuevo.");
-            }
-        }
-    }
     private void patientOptions(Patient patient){
         while (true) {
             String choice = view.showPatientOptions();
@@ -176,7 +101,7 @@ public class PresenterClass {
                 case "1":
                     Object [] dreamParams = view.registerDream();
                     registerDream(patient,dreamParams);
-                    view.showMessage("Sueno registrado con exito.");
+                    view.showMessage("\nSueño registrado con exito.");
                     break;
                 case "2":
                     view.showDreams(getDreamsForView(patient.getId()));
@@ -266,27 +191,5 @@ public class PresenterClass {
         }
         return patientList;
     }
-
-
-    public void optionSummary(){
-        while (true){
-            String choice = showMenuSumery();
-            System.out.println(choice);
-            switch (choice) {
-                case "1":
-                    patientFlow();
-                    break;
-                case "2":
-                    therapistFlow();
-                    break;
-                case "3":
-                    //System.out.println("Saliendo del sistema...");
-                    return;
-                default:
-                    //System.out.println("Opción no válida. Intente de nuevo.");
-            }
-        }
-    }
-
 
 }
