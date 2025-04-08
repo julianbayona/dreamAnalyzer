@@ -8,8 +8,7 @@ public class ConductualEmotional extends EmotionalAnalyzer {
     }
 
     @Override
-    public void analyzeDream() {
-        System.out.println("Analizando el sueño desde una perspectiva conductual-emocional");
-        System.out.println("Identificando patrones emocionales y respuestas conductuales");
+    public String analyzeDream() {
+        return ("Analizando el sueño desde una perspectiva conductual-emocional");
     }
 }

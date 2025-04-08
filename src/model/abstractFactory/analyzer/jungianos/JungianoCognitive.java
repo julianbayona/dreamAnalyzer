@@ -8,8 +8,7 @@ public class JungianoCognitive extends CognitiveAnalyzer {
     }
 
     @Override
-    public void analyzeDream() {
-        System.out.println("Analizando el sueño desde una perspectiva jungiana-cognitiva");
-        System.out.println("Explorando la relación entre arquetipos y procesos cognitivos");
+    public String analyzeDream() {
+        return ("Analizando el sueño desde una perspectiva jungiana-cognitiva");
     }
 }

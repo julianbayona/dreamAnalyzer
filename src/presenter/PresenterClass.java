@@ -1,5 +1,6 @@
 package presenter;
 
+import model.Constants;
 import model.Dream;
 import model.Manager;
 import model.Patient;
@@ -20,7 +21,7 @@ public class PresenterClass {
         this.init();
     }
 
-    public String showMenuSession(){
+    public String showMenuSession() {
         return view.showMenuSession();
     }
 
@@ -30,17 +31,17 @@ public class PresenterClass {
             switch (choice) {
                 case "1":
                     String name = view.getUserName();
-                    boolean exists =  manager.loginPatient(name);
-                    if(exists) {
+                    boolean exists = manager.loginPatient(name);
+                    if (exists) {
                         patientOptions(manager.getPatientByName(name));
-                    }else{
+                    } else {
                         view.showMessage("Usuario no registrado dentro del sistema");
                     }
                     break;
                 case "2":
-                    Object [] patientParams = view.registerPatient();
+                    Object[] patientParams = view.registerPatient();
                     registerPatient(patientParams);
-                    //showDreams(patient);
+                    // showDreams(patient);
                     break;
                 case "3":
                     return;
@@ -52,19 +53,19 @@ public class PresenterClass {
 
     private void therapistFlow() {
         while (true) {
-        String choice = view.showLogin("TERAPEUTA");
+            String choice = view.showLogin("TERAPEUTA");
             switch (choice) {
                 case "1":
                     String name = view.getUserName();
-                    boolean exists =  manager.loginTherapist(name);
-                    if(exists) {
+                    boolean exists = manager.loginTherapist(name);
+                    if (exists) {
                         therapistOptions(manager.getTherapistByName(name));
-                    }else{
+                    } else {
                         view.showMessage("Usuario no registrado dentro del sistema");
                     }
                     break;
                 case "2":
-                    Object [] therapistParams = view.registerTherapist();
+                    Object[] therapistParams = view.registerTherapist();
                     registerTherapist(therapistParams);
                     break;
                 case "3":
@@ -75,33 +76,33 @@ public class PresenterClass {
         }
     }
 
-    public void init(){
-        Boolean exit=false;
+    public void init() {
+        Boolean exit = false;
 
-        while (exit==false){
+        while (exit == false) {
             String session = view.showMenuSession();
-            if (session.equals("Therapist")){
+            if (session.equals("Therapist")) {
                 therapistFlow();
-                //sessionTherapist();
-            }else if (session.equals("Patient")){
+                // sessionTherapist();
+            } else if (session.equals("Patient")) {
                 patientFlow();
-                //sessionPatient();
-            }else if (session.equals("exit")){
-                exit=true;
+                // sessionPatient();
+            } else if (session.equals("exit")) {
+                exit = true;
                 view.exitMessage();
-            }else {
+            } else {
                 System.out.println("Opción no válida, intente de nuevo.");
             }
         }
     }
 
-    private void patientOptions(Patient patient){
+    private void patientOptions(Patient patient) {
         while (true) {
             String choice = view.showPatientOptions();
             switch (choice) {
                 case "1":
-                    Object [] dreamParams = view.registerDream();
-                    registerDream(patient,dreamParams);
+                    Object[] dreamParams = view.registerDream();
+                    registerDream(patient, dreamParams);
                     view.showMessage("\nSueño registrado con exito.");
                     break;
                 case "2":
@@ -115,7 +116,7 @@ public class PresenterClass {
         }
     }
 
-    private void therapistOptions(Therapist therapist){
+    private void therapistOptions(Therapist therapist) {
         while (true) {
             String choice = view.showTherapistOptions();
             switch (choice) {
@@ -125,48 +126,122 @@ public class PresenterClass {
                 case "2":
                     int patientId = view.getUserId();
                     Patient patient = manager.getPatientById(patientId);
-                    if(patient!= null){
+                    if (patient != null) {
                         view.showDreams(getDreamsForView(patient.getId()));
                         int dreamId = view.getDreamId();
                         String repositoryIndex = view.showRepositories();
                         String repotype = selectRepository(repositoryIndex);
                         manager.createRepository(repotype);
-                        manager.saveDreamToRepository(manager.getDreamById(patientId,dreamId),repotype);
-                    }else{
+                        manager.saveDreamToRepository(manager.getDreamById(patientId, dreamId), repotype);
+                    } else {
                         view.showMessage("No hay usuarios registrados con ese nombre.");
                     }
                     break;
                 case "3":
                     return;
+                case "5":
+                    analyseDream();
+                    break;
                 default:
                     view.showMessage("Opcion no valida.");
             }
         }
     }
 
-    public String selectRepository(String repositoryIndex){
+    public void analyseDream() {
+        String option = "";
+        Dream dream = dreamToAnalyse();
+        changeApproach();
+        realizeAnalysis(option, dream);
+    }
+
+    public Dream dreamToAnalyse() {
+        String idUser = view.getInput("Ingrese el id del usuario al que le analizará el sueño:");
+        view.showDreams(getDreamsForView(Integer.parseInt(idUser)));
+        String idDream = view.getInput("Ingrese el id del sueño que desea analizar:");
+        return manager.getDreamById(Integer.parseInt(idUser), Integer.parseInt(idDream));
+    }
+
+    public void changeApproach() {
+        String approach = view.getInput("Ingrese el tipo de enfoque que desea utilizar:\n" +
+                "1. Jungiano\n" +
+                "2. conductual\n");
+        switch (approach) {
+            case "1":
+                manager.changeApproach(Constants.JUNGIANO);
+                break;
+            case "2":
+                manager.changeApproach(Constants.CONDUCTUAL);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void realizeAnalysis(String option, Dream dream) {
+        while (!option.equals("5")) {
+            option = view.getInput("Ingrese el tipo de análisis que desea realizar:\n" +
+                    "1. Cognitivo\n" +
+                    "2. Emocional\n" +
+                    "3. Estadísitco\n" +
+                    "4. Simbólico\n" +
+                    "5. Atrás\n");
+            switch (option) {
+                case "1":
+                    showDream(dream);
+                    view.showMessage(manager.analyzeDream(Constants.COGNITIVE, dream));
+                    break;
+                case "2":
+                    showDream(dream);
+                    view.showMessage(manager.analyzeDream(Constants.EMOTIONAL, dream));
+                    break;
+                case "3":
+                    showDream(dream);
+                    view.showMessage(manager.analyzeDream(Constants.STATISTICAL, dream));
+                    break;
+                case "4":
+                    showDream(dream);
+                    view.showMessage(manager.analyzeDream(Constants.SYMBOLIC, dream));
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    public void showDream(Dream dream) {
+        view.showMessage("--------------------------");
+        view.showMessage("Sueño analizado:");
+        view.showMessage("Duración: " + dream.getDuration() + " min");
+        view.showMessage("   Intensidad Emocional: " + dream.getEmotionalIntensity());
+        view.showMessage("   Narrativa: " + dream.getNarrative());
+        view.showMessage("   Nivel de Luz Visual: " + dream.getVisualLight());
+    }
+
+    public String selectRepository(String repositoryIndex) {
         String repoType = "";
-        switch (repositoryIndex){
+        switch (repositoryIndex) {
             case "1":
                 repoType = "historical";
                 break;
-            case"2":
+            case "2":
                 repoType = "temporary";
                 break;
         }
         return repoType;
     }
 
-    public void registerDream(Patient patient, Object [] dreamParams){
-        manager.registerDream(patient, (Integer) dreamParams[0], (Integer)  dreamParams[1], (Integer) dreamParams[2], (String)dreamParams[3]);
+    public void registerDream(Patient patient, Object[] dreamParams) {
+        manager.registerDream(patient, (Integer) dreamParams[0], (Integer) dreamParams[1], (Integer) dreamParams[2],
+                (String) dreamParams[3]);
     }
 
-    public void registerPatient(Object [] patientParams){
-        manager.registerPatient((String) patientParams[0],(Integer) patientParams[1]);
+    public void registerPatient(Object[] patientParams) {
+        manager.registerPatient((String) patientParams[0], (Integer) patientParams[1]);
     }
 
-    public void registerTherapist(Object [] therapistParams){
-        manager.registerTherapist((String) therapistParams[0],(Integer) therapistParams[1]);
+    public void registerTherapist(Object[] therapistParams) {
+        manager.registerTherapist((String) therapistParams[0], (Integer) therapistParams[1]);
     }
 
     public List<Object[]> getDreamsForView(int patientId) {
@@ -175,7 +250,8 @@ public class PresenterClass {
 
         if (dreams != null) {
             for (Dream dream : dreams) {
-                dreamList.add(new Object[]{dream.getDuration(), dream.getEmotionalIntensity(), dream.getNarrative(), dream.getVisualLight()});
+                dreamList.add(new Object[] { dream.getDuration(), dream.getEmotionalIntensity(), dream.getNarrative(),
+                        dream.getVisualLight() });
             }
         }
         return dreamList;
@@ -187,10 +263,14 @@ public class PresenterClass {
 
         if (patients != null) {
             for (Patient patient : patients) {
-                patientList.add(new Object[]{patient.getName(), patient.getId(), patient.getAge()});
+                patientList.add(new Object[] { patient.getName(), patient.getId(), patient.getAge() });
             }
         }
         return patientList;
+    }
+
+    public static void main(String[] args) {
+        new PresenterClass();
     }
 
 }
