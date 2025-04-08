@@ -4,17 +4,20 @@ import model.abstractFactory.FactoryProvider;
 import model.abstractFactory.factories.TherapeuticApproachFactory;
 import model.factoryMethod.AbstractProductRepository;
 import model.factoryMethod.DreamRepositoryFactory;
+import model.singleton.SystemSetting;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.*;
 
 public class Manager {
 
+<<<<<<< HEAD
     String systemSetting; // debe ser de tipo de systemSetting pero lo dejo asi mientras para no error
     private Map<Integer, List<Dream>> patientDreams; // el segundo atributo debe ser Dream pero lo dejo mientras asi
                                                      // para no error
+=======
+    private SystemSetting systemSetting; //debe ser de tipo de systemSetting pero lo dejo asi mientras para no error
+    private Map<Integer, List<Dream>> patientDreams; //el segundo atributo debe ser Dream pero lo dejo mientras asi para no error
+>>>>>>> feature/systemConfigMenu
     private List<Patient> patients;
     private List<Therapist> therapists;
     private AbstractProductRepository historicalRepository;
@@ -24,8 +27,12 @@ public class Manager {
     private FactoryProvider factoryProvider;
 
     public Manager() {
+<<<<<<< HEAD
         this.factoryProvider = new FactoryProvider();
         this.systemSetting = "aqui va el sistema setting";
+=======
+        this.systemSetting = SystemSetting.getInstance();
+>>>>>>> feature/systemConfigMenu
         this.patientDreams = new HashMap<>();
         this.patients = new ArrayList<>();
         this.therapists = new ArrayList<>();
@@ -187,9 +194,19 @@ public class Manager {
         return null;
     }
 
+<<<<<<< HEAD
     public void systemConfig() {
         // logica para configurar el sistema, recuerden cambiar los tipos de los
         // atributos
+=======
+    
+    public String getSystemConfig(String configKey) {
+        return systemSetting.get(configKey);
+    }
+
+    public void setSystemConfig(String configKey, String configValue) {
+        systemSetting.set(configKey, configValue);
+>>>>>>> feature/systemConfigMenu
     }
 
     public String createReport(String dreamAnaliced) {
@@ -201,8 +218,13 @@ public class Manager {
         return patients;
     }
 
+<<<<<<< HEAD
     public void changeApproach(String approach) {
         this.approachFactory = factoryProvider.getFactory(approach);
+=======
+    public String[] getAllConfigKeys() {
+        return systemSetting.getAllKeys();
+>>>>>>> feature/systemConfigMenu
     }
 
     public boolean existApproach(){

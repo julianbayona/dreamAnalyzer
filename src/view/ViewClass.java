@@ -1,6 +1,7 @@
 package view;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class ViewClass {
@@ -164,13 +165,13 @@ public class ViewClass {
     }
 
     public String showTherapistOptions() {
-        System.out.println("1.Ver lista de pacientes");
-        System.out.println("2.Almacenar sueño en repositorio");
+        System.out.println("1. Ver lista de pacientes");
+        System.out.println("2. Almacenar sueño en repositorio");
         System.out.println("3. Generar informe de análisis--(no implementado)");
         System.out.println("4. Duplicar sueño para modificar narrativa--(no implementado)");
         System.out.println("5. Analizar sueño--(no implementado)");
         System.out.println("6. Configurar sistema");
-        System.out.println("7.Salir");
+        System.out.println("7. Salir");
         return scanner.nextLine();
     }
 
@@ -184,5 +185,101 @@ public class ViewClass {
 
     public void showMessage(String message){
         System.out.println(message);
+    }
+
+    
+    public String showSystemConfigOptions(){
+        System.out.println("--- Configuración del Sistema ---");
+        System.out.println("1. Ver configuración del sistema");
+        System.out.println("2. Cambiar configuración del sistema");
+        System.out.println("3. Ver todas las configuraciones del sistema");
+        System.out.println("4. Salir");
+        return scanner.nextLine();
+    }
+
+    public String showConfigKeyMenu(String verb, String action) {
+        System.out.println("--- " + verb + " Configuración del Sistema ---");
+        System.out.println("Seleccione la configuración que desea " + action + ":");
+        System.out.println("1. Edad máxima de los pacientes (edad-maxima-paciente)");
+        System.out.println("2. Edad mínima de los pacientes (edad-minima-paciente)");
+        System.out.println("3. Duración máxima de la consulta (duracion-maxima-consulta)");
+        System.out.println("4. Duración mínima de la consulta (duracion-minima-consulta)");
+        System.out.println("5. Idioma predeterminado (idioma-predeterminado)");
+        System.out.println("6. Idiomas soportados (idiomas-soportados)");
+        System.out.println("7. Formato de fecha (formato-fecha)");
+        System.out.println("8. Formato de hora (formato-hora)");
+        System.out.println("9. Lenguaje explícito (lenguaje-explicito)");
+        System.out.println("10. Período de retención de datos (periodo-retencion-datos)");
+        System.out.println("12. Aplicar guía ética estricta (aplicar-guia-etica-estricta)");
+        System.out.println("13. Salir");
+        return scanner.nextLine();
+    }
+
+    public String convertConfigValue(String key) {
+        String value = "";
+        switch(key){
+            case "1":
+                value = "edad-maxima-paciente";
+                break;
+            case "2":
+                value = "edad-minima-paciente";
+                break;
+            case "3":
+                value = "duracion-maxima-consulta";
+                break;
+            case "4":   
+                value = "duracion-minima-consulta";
+                break;
+            case "5":
+                value = "idioma-predeterminado";
+                break;
+            case "6":
+                value = "idiomas-soportados";
+                break;
+            case "7":
+                value = "formato-fecha";
+                break;
+            case "8":
+                value = "formato-hora";
+                break;
+            case "9":
+                value = "lenguaje-explicito";
+                break;
+            case "10":
+                value = "periodo-retencion-datos";
+                break;
+            case "11":
+                value = "permitir-datos-anonimos";
+                break;
+            case "12":
+                value = "aplicar-guia-etica-estricta";
+                break;
+            case "13":
+                value = "13";
+                break;
+            default:
+                value = null;
+                break;
+        }
+        return value;
+    }
+    
+    public void showSucessUpdateConfig(){
+        showMessage("Configuración del sistema actualizada.");
+        getInput("(Presione cualquier tecla para continuar...)");
+    }
+
+    public void showErrorConfig(){
+        showMessage("Seleccione una configuracion valida");
+        getInput("(Presione cualquier tecla para continuar...)");
+    }
+
+    public String showAndGetValue(String configValue, String value){
+        showMessage("--- Configuración del sistema ---\n" + configValue + ": " + value);
+        return getInput("Ingrese el nuevo valor para " + configValue);
+    }
+
+    public void showConfig(String configValue, String value) {
+        showMessage("--- Configuración del sistema ---\n" + configValue + ": " + value);
     }
 }
