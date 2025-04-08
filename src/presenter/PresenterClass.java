@@ -138,6 +138,12 @@ public class PresenterClass {
                     break;
                 case "3":
                     return;
+
+                case "6":
+                    selectConfigMenu();
+                    break;
+                case "7":
+                    return;
                 default:
                     view.showMessage("Opcion no valida.");
             }
@@ -191,6 +197,66 @@ public class PresenterClass {
             }
         }
         return patientList;
+    }
+
+    public void selectConfigMenu(){
+        String option = view.showSystemConfigOptions();
+        switch (option) {
+            case "1":
+                getConfigKeyMenu();
+                break;
+            case "2":
+                setConfigKeyMenu();
+                break;
+            case "3":
+                getConfigsKeyMenu();
+                break;
+            case "4":
+                break;
+            default:
+                view.showMessage("Opción no válida.");
+        }
+    }
+
+    public void getConfigKeyMenu(){
+        String key = view.showConfigKeyMenu("Ver", "visualizar");
+        String configValue = view.convertConfigValue(key);
+        if (configValue == null) {
+            view.showErrorConfig();
+        } else if(configValue.equals("13")){
+            return;  
+        } else {
+            String value = manager.getSystemConfig(configValue);
+            view.showMessage("--- Configuración del sistema ---\n" + configValue + ": " + value);
+            view.getInput("(Presione cualquier tecla para continuar...)");
+        }
+    }
+
+    public void setConfigKeyMenu(){
+        String key = view.showConfigKeyMenu("Actualizar", "actualizar");
+        String configValue = view.convertConfigValue(key);
+        if (configValue == null) {
+            view.showErrorConfig();
+        } else if(configValue.equals("13")){
+            return;  
+        } else {
+            String newValue = view.showAndGetValue(configValue, manager.getSystemConfig(configValue));
+            manager.setSystemConfig(configValue, newValue);
+            view.showSucessUpdateConfig();
+        }
+    }
+
+    public void getConfigsKeyMenu(){
+        String[] keyValues = manager.getAllConfigKeys();
+        view.showMessage("--- Configuraciones del sistema ---");
+        for(String keyValue : keyValues) {
+            if (keyValue == null) {
+                view.showErrorConfig();
+            } else {
+                view.showMessage(keyValue + ": " + manager.getSystemConfig(keyValue));
+            }
+        }
+        view.getInput("(Presione cualquier tecla para continuar...)");
     }
 
 }

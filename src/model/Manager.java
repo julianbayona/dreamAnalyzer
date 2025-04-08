@@ -2,15 +2,13 @@ package model;
 
 import model.factoryMethod.AbstractProductRepository;
 import model.factoryMethod.DreamRepositoryFactory;
+import model.singleton.SystemSetting;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.*;
 
 public class Manager {
 
-    String systemSetting; //debe ser de tipo de systemSetting pero lo dejo asi mientras para no error
+    private SystemSetting systemSetting; //debe ser de tipo de systemSetting pero lo dejo asi mientras para no error
     private Map<Integer, List<Dream>> patientDreams; //el segundo atributo debe ser Dream pero lo dejo mientras asi para no error
     private List<Patient> patients;
     private List<Therapist> therapists;
@@ -20,7 +18,7 @@ public class Manager {
 
 
     public Manager() {
-        this.systemSetting = "aqui va el sistema setting";
+        this.systemSetting = SystemSetting.getInstance();
         this.patientDreams = new HashMap<>();
         this.patients = new ArrayList<>();
         this.therapists = new ArrayList<>();
@@ -174,8 +172,13 @@ public class Manager {
         return "aqui va el analisis del sueño";
     }
 
-    public void systemConfig(){
-        //logica para configurar el sistema, recuerden cambiar los tipos de los atributos
+    
+    public String getSystemConfig(String configKey) {
+        return systemSetting.get(configKey);
+    }
+
+    public void setSystemConfig(String configKey, String configValue) {
+        systemSetting.set(configKey, configValue);
     }
 
     public String createReport (String dreamAnaliced){
@@ -187,5 +190,8 @@ public class Manager {
         return patients;
     }
 
+    public String[] getAllConfigKeys() {
+        return systemSetting.getAllKeys();
+    }
 
 }
