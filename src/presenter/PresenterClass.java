@@ -5,7 +5,6 @@ import java.util.List;
 import model.Dream;
 import model.Manager;
 import model.Patient;
-import model.Therapist;
 import view.ViewClass;
 
 public class PresenterClass {
@@ -21,6 +20,14 @@ public class PresenterClass {
 
     public String showMenuSession(){
         return view.showMenuSession();
+    }
+
+    public void showCreateReport(){
+        int id = view.getUserId();
+        System.out.println(manager.getDreamsById(id));
+        int idDream = view.getDreamId();
+        Dream dream = manager.getDreamById(id, idDream);
+        System.out.println(dream);
     }
 
     private void patientFlow() {
@@ -57,7 +64,7 @@ public class PresenterClass {
                     String name = view.getUserName();
                     boolean exists =  manager.loginTherapist(name);
                     if(exists) {
-                        therapistOptions(manager.getTherapistByName(name));
+                        therapistOptions();
                     }else{
                         view.showMessage("Usuario no registrado dentro del sistema");
                     }
@@ -136,7 +143,7 @@ public class PresenterClass {
                     }
                     break;
                 case "3":
-                    return;
+                    showCreateReport();
                 default:
                     view.showMessage("Opcion no valida.");
             }

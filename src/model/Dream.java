@@ -46,4 +46,18 @@ public class Dream {
         this.narrative = narrative;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Dream{");
+        sb.append("duration=").append(duration);
+        sb.append(", emotionalIntensity=").append(emotionalIntensity);
+        sb.append(", visualLight=").append(visualLight);
+        sb.append(", narrative=").append(narrative);
+        sb.append('}');
+        return sb.toString();
+    }
+
+
+
 }
