@@ -11,4 +11,11 @@ public class JungianoCognitive extends CognitiveAnalyzer {
     public String analyzeDream() {
         return ("Analizando el sueño desde una perspectiva jungiana-cognitiva");
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    
 }

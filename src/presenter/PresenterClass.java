@@ -1,16 +1,15 @@
 package presenter;
 
+import java.util.ArrayList;
+import java.util.List;
 import model.Constants;
 import model.Dream;
 import model.Manager;
 import model.Patient;
-import model.Therapist;
 import view.ViewClass;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class PresenterClass {
+
     private ViewClass view;
     private Manager manager;
 
@@ -23,6 +22,17 @@ public class PresenterClass {
 
     public String showMenuSession() {
         return view.showMenuSession();
+    }
+
+    public void showCreateReport() {
+        int id = view.getUserId();
+        System.out.println(manager.getDreamsById(id));
+        int idDream = view.getDreamId();
+        Dream dream = manager.getDreamById(id, idDream);
+        System.out.println(dream);
+        showDream(dream);
+        changeApproach();
+        withSummary();
     }
 
     private void patientFlow() {
@@ -59,7 +69,7 @@ public class PresenterClass {
                     String name = view.getUserName();
                     boolean exists = manager.loginTherapist(name);
                     if (exists) {
-                        therapistOptions(manager.getTherapistByName(name));
+                        therapistOptions();
                     } else {
                         view.showMessage("Usuario no registrado dentro del sistema");
                     }
@@ -116,7 +126,7 @@ public class PresenterClass {
         }
     }
 
-    private void therapistOptions(Therapist therapist) {
+    private void therapistOptions() {
         while (true) {
             String choice = view.showTherapistOptions();
             switch (choice) {
@@ -138,7 +148,8 @@ public class PresenterClass {
                     }
                     break;
                 case "3":
-                    return;
+                    showCreateReport();
+                    break;
                 case "5":
                     analyseDream();
                     break;
@@ -169,9 +180,9 @@ public class PresenterClass {
     }
 
     public void changeApproach() {
-        String approach = view.getInput("Ingrese el tipo de enfoque que desea utilizar:\n" +
-                "1. Jungiano\n" +
-                "2. conductual\n");
+        String approach = view.getInput("Ingrese el tipo de enfoque que desea utilizar:\n"
+                + "1. Jungiano\n"
+                + "2. conductual\n");
         switch (approach) {
             case "1":
                 manager.changeApproach(Constants.JUNGIANO);
@@ -184,14 +195,61 @@ public class PresenterClass {
         }
     }
 
+    public void withSummary() {
+        boolean inLoop = true;
+        while (inLoop) {
+            String approach = view.getInput("Ingrese si desea el reporte con:\n"
+                    + "1. resumen\n"
+                    + "2. analisis cognitivo\n"
+                    + "3. analisis emocional\n"
+                    + "4. analisis estatico\n"
+                    + "5. analisis symbolico\n"
+                    + "6. Grafico\n"
+                    + "7. mostrar\n");
+            switch (approach) {
+                case "1":
+                    manager.createReportWithSummary();
+                    break;
+
+                case "2":
+                    manager.createReportWithAnalizisCognitive();
+                    break;
+
+                case "3":
+                    manager.createReportWithAnalizisEmotional();
+                    break;
+
+                case "4":
+                    manager.createReportWithAnalizisStatical();
+                    break;
+
+                case "5":
+                    manager.createReportWithAnalizisSymbolic();
+                    break;
+
+                case "6":
+                    manager.createReportWithgraph();
+                    break;
+
+                case "7":
+                    System.out.println(manager.getReport().toString());
+                    inLoop = false;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+    }
+
     public void realizeAnalysis(String option, Dream dream) {
         while (!option.equals("5")) {
-            option = view.getInput("Ingrese el tipo de análisis que desea realizar:\n" +
-                    "1. Cognitivo\n" +
-                    "2. Emocional\n" +
-                    "3. Estadísitco\n" +
-                    "4. Simbólico\n" +
-                    "5. Atrás\n");
+            option = view.getInput("Ingrese el tipo de análisis que desea realizar:\n"
+                    + "1. Cognitivo\n"
+                    + "2. Emocional\n"
+                    + "3. Estadísitco\n"
+                    + "4. Simbólico\n"
+                    + "5. Atrás\n");
             switch (option) {
                 case "1":
                     showDream(dream);
@@ -256,8 +314,8 @@ public class PresenterClass {
 
         if (dreams != null) {
             for (Dream dream : dreams) {
-                dreamList.add(new Object[] { dream.getDuration(), dream.getEmotionalIntensity(), dream.getNarrative(),
-                        dream.getVisualLight() });
+                dreamList.add(new Object[]{dream.getDuration(), dream.getEmotionalIntensity(), dream.getNarrative(),
+                    dream.getVisualLight()});
             }
         }
         return dreamList;
@@ -269,7 +327,7 @@ public class PresenterClass {
 
         if (patients != null) {
             for (Patient patient : patients) {
-                patientList.add(new Object[] { patient.getName(), patient.getId(), patient.getAge() });
+                patientList.add(new Object[]{patient.getName(), patient.getId(), patient.getAge()});
             }
         }
         return patientList;

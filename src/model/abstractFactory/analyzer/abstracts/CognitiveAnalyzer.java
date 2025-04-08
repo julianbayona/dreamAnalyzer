@@ -13,4 +13,11 @@ public abstract class CognitiveAnalyzer implements Analyzer {
     public String getApproach() {
         return this.approach;
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    
 }

@@ -66,12 +66,12 @@ public class ViewClass {
 
     public int getUserId(){
         System.out.println("\nIngrese id del usuario: ");
-        return scanner.nextInt();
+        return Integer.parseInt(scanner.nextLine()) ;
     }
 
     public int getDreamId(){
         System.out.println("\nIngrese id del sueño: ");
-        return scanner.nextInt();
+        return Integer.parseInt(scanner.nextLine());
     }
 
     public Object[] registerPatient() {

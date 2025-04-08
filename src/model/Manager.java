@@ -1,12 +1,25 @@
 package model;
 
+import java.util.*;
 import model.abstractFactory.FactoryProvider;
+import model.abstractFactory.analyzer.abstracts.CognitiveAnalyzer;
+import model.abstractFactory.analyzer.abstracts.EmotionalAnalyzer;
+import model.abstractFactory.analyzer.abstracts.StatisticalAnalyzer;
+import model.abstractFactory.analyzer.abstracts.SymbolicAnalyzer;
+import model.abstractFactory.analyzer.conductuals.ConductualCognitive;
+import model.abstractFactory.analyzer.conductuals.ConductualEmotional;
+import model.abstractFactory.analyzer.conductuals.ConductualStatistical;
+import model.abstractFactory.analyzer.conductuals.ConductualSymbolic;
+import model.abstractFactory.analyzer.jungianos.JungianoCognitive;
+import model.abstractFactory.analyzer.jungianos.JungianoEmotional;
+import model.abstractFactory.analyzer.jungianos.JungianoStatistical;
+import model.abstractFactory.analyzer.jungianos.JungianoSymbolic;
 import model.abstractFactory.factories.TherapeuticApproachFactory;
+import model.builder.DreamReport;
+import model.builder.DreamReportBuilder;
 import model.factoryMethod.AbstractProductRepository;
 import model.factoryMethod.DreamRepositoryFactory;
 import model.singleton.SystemSetting;
-
-import java.util.*;
 
 public class Manager {
 
@@ -19,6 +32,7 @@ public class Manager {
     private DreamRepositoryFactory dreamRepositoryFactory;
     private TherapeuticApproachFactory approachFactory;
     private FactoryProvider factoryProvider;
+    private DreamReportBuilder dreamReportBuilder;
 
     public Manager() {
         this.systemSetting = SystemSetting.getInstance();
@@ -26,6 +40,7 @@ public class Manager {
         this.patients = new ArrayList<>();
         this.therapists = new ArrayList<>();
         dreamRepositoryFactory = new DreamRepositoryFactory();
+        this.dreamReportBuilder = new DreamReportBuilder();
         loadData();
     }
 
@@ -192,9 +207,74 @@ public class Manager {
         systemSetting.set(configKey, configValue);
     }
 
-    public String createReport(String dreamAnaliced) {
-        // logica para crear el reporte, recuerden cambiar los tipos de los atributos
-        return "aqui va el reporte del sueño analizado";
+    public void createReportWithAnalizisCognitive() {
+        dreamReportBuilder.withCognitiveSection((CognitiveAnalyzer)approachFactory.getCognitiveAnalyzer());
+    }
+
+    public void createReportWithAnalizisEmotional() {
+        dreamReportBuilder.withEmotionalSection((EmotionalAnalyzer)approachFactory.getEmotionalAnalyzer());
+    }
+
+    public void createReportWithAnalizisStatical() {
+        dreamReportBuilder.withStaticalSection((StatisticalAnalyzer)approachFactory.getStatisticalAnalyzer());
+    }
+
+    public void createReportWithAnalizisSymbolic() {
+        dreamReportBuilder.withSymbolicSection((SymbolicAnalyzer)approachFactory.getSymbolicAnalyzer());
+    }
+
+
+    public void createReportWithSummary() {
+        dreamReportBuilder.withSummary();
+    }
+
+
+    public void createReportWithgraph() {
+        dreamReportBuilder.withGraphicalInsights();
+    }
+
+
+    public DreamReport getReport(){
+        return dreamReportBuilder.build();
+    }
+
+
+    public void createReportWithAnalyzeJuguiano(int option) {
+
+        switch (option) {
+            case 1:
+                dreamReportBuilder.withSymbolicSection(new JungianoSymbolic());
+                break;
+            case 2:
+                dreamReportBuilder.withStaticalSection(new JungianoStatistical());
+                break;
+            case 3:
+                dreamReportBuilder.withEmotionalSection(new JungianoEmotional());
+                break;
+            case 4:
+                dreamReportBuilder.withCognitiveSection(new JungianoCognitive());
+                break;
+            default:
+        }
+    }
+
+    public void createReportWithAnalyzeConductual(int option) {
+
+        switch (option) {
+            case 1:
+                dreamReportBuilder.withSymbolicSection(new ConductualSymbolic());
+                break;
+            case 2:
+                dreamReportBuilder.withStaticalSection(new ConductualStatistical());
+                break;
+            case 3:
+                dreamReportBuilder.withEmotionalSection(new ConductualEmotional());
+                break;
+            case 4:
+                dreamReportBuilder.withCognitiveSection(new ConductualCognitive());
+                break;
+            default:
+        }
     }
 
     public List<Patient> getAllPatients() {
@@ -209,7 +289,7 @@ public class Manager {
         return systemSetting.getAllKeys();
     }
 
-    public boolean existApproach(){
+    public boolean existApproach() {
         return approachFactory != null;
     }
 }
